@@ -12,6 +12,7 @@ import {
   
   @Injectable()
   export class AuthService {
+    private blacklistedTokens = new Set<string>(); // Store invalidated tokens (we can use Redis for production)
     constructor(
       private usersService: UsersService,
       private jwtService: JwtService,
@@ -59,6 +60,15 @@ import {
       } catch (error) {
         throw error;
       }
+    }
+
+    async logout(token: string): Promise<{ message: string }> {
+      this.blacklistedTokens.add(token); // Add token to blacklist
+      return { message: 'Logout successful' };
+    }
+  
+    isTokenBlacklisted(token: string): boolean {
+      return this.blacklistedTokens.has(token);
     }
   }
   
