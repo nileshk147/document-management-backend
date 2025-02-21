@@ -39,4 +39,13 @@ export class FileUploadService {
       throw error;
     }
   }
+
+  async deleteFile(fileName: string): Promise<void> {
+    try {
+      await fs.unlink(join(this.uploadDir, fileName));
+    } catch (error) {
+      // file might have been already deleted
+      console.error(`Error deleting file ${fileName}:`, error);
+    }
+  }
 }
