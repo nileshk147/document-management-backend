@@ -44,4 +44,5 @@ export class ConfigService {
   private getEnvBoolean(key: string, defaultValue: boolean = false): boolean {
     return this.envConfig[key] ? this.envConfig[key] === 'true' : defaultValue;
   }
+
 }
