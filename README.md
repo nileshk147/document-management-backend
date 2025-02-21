@@ -71,22 +71,6 @@ test/                      # Unit and integration tests
 - **Role-based access control (RBAC)**
 - **Bcrypt password hashing**
 
-### **🛠 Example: JWT Configuration in `app.module.ts`**
-```typescript
-@Module({
-  imports: [
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
-        signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN', '1d') },
-      }),
-      inject: [ConfigService],
-    }),
-  ],
-})
-```
-
 ---
 
 ## **📝 API Endpoints**  
@@ -108,8 +92,16 @@ test/                      # Unit and integration tests
 #### **🔹 Example: Login Response**
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR...",
-  "expiresIn": "1d"
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiOTMyMzRlOS00MGM3LTRiNjgtYTA5OS03MWQ0ODc2NjU5Y2MiLCJlbWFpbCI6Im5pbGVzaGsxNDdAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQwMTM0NzAyLCJleHAiOjE3NDAyMjExMDJ9.IVeD_Y0qqSQbni5mCfR4IEpvKaqUvdEqfgZatXwj0gI",
+    "user": {
+        "id": "b93234e9-40c7-4b68-a099-71d4876659cc",
+        "createdAt": "2025-02-21T05:04:48.667Z",
+        "updatedAt": "2025-02-21T05:04:48.667Z",
+        "deletedAt": null,
+        "isActive": true,
+        "email": "user@example.com",
+        "role": "admin"
+    }
 }
 ```
 
@@ -118,11 +110,11 @@ test/                      # Unit and integration tests
 ### **📂 Document Management**  
 | Method | Endpoint | Description |
 |--------|---------|-------------|
-| **POST** | `/documents` | Upload new document |
-| **GET** | `/documents` | List all documents |
-| **GET** | `/documents/:id` | Get document by ID |
-| **PATCH** | `/documents/:id` | Update document metadata |
-| **DELETE** | `/documents/:id` | Delete a document |
+| **POST** | `/document` | Upload new document |
+| **GET** | `/document` | List all documents |
+| **GET** | `/document/:id` | Get document by ID |
+| **PATCH** | `/document/:id` | Update document metadata |
+| **DELETE** | `/document/:id` | Delete a document |
 
 ---
 
