@@ -38,7 +38,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     if (this.authService.isTokenBlacklisted(token)) {
-      throw new UnauthorizedException('Token is blacklisted');
+      throw new UnauthorizedException('Token is expired');
     }
 
     const user = await this.usersService.findOne(payload.sub);
