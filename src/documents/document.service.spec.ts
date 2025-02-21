@@ -84,4 +84,20 @@ describe('DocumentsService', () => {
       expect(repository.save).toHaveBeenCalled();
     });
   });
+
+  describe('findOne', () => {
+    it('should find a document by id', async () => {
+      const mockDocument = { id: '1', title: 'Test Document' };
+      mockRepository.findOne.mockResolvedValue(mockDocument);
+
+      const result = await service.findOne('1');
+      expect(result).toEqual(mockDocument);
+    });
+
+    it('should throw NotFoundException when document not found', async () => {
+      mockRepository.findOne.mockResolvedValue(null);
+
+      await expect(service.findOne('1')).rejects.toThrow(NotFoundException);
+    });
+  });
 });
