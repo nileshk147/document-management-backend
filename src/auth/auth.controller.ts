@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Req, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -27,5 +27,13 @@ export class AuthController {
   @Get('profile')
   getProfile(@CurrentUser() user: User) {
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async logout(@Req() req): Promise<{ message: string }> {
+    const token = req.headers.authorization?.split(' ')[1]; // Extract token
+    if (!token) throw new UnauthorizedException('Token missing');
+    return this.authService.logout(token);
   }
 }
